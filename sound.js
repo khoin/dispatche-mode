@@ -49,8 +49,8 @@ class Sound {
 						r += Math.cos(node.distance) * z;
 					break;
 					default:
-						l += 0.2 * Math.sin(TAU*t*110*node.distance*arp[~~(t*node.distance%4)]) ;
-						r += 0.2 * Math.sin(TAU*t*110*node.distance*arp[~~((t*node.distance+0.01)%4)])  ;
+						l += 0.09 * Math.sin(TAU*t*110*node.distance*arp[~~(t*node.distance%4)]) ;
+						r += 0.09 * Math.sin(TAU*t*110*node.distance*arp[~~((t*node.distance+0.01)%4)])  ;
 					break;
 				}
 			}

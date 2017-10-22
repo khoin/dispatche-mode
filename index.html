@@ -11,16 +11,23 @@
 		#map {
 			height: 100%;
 		}
+		.container { max-width: 800px; margin: 0 auto; height: 80%; text-align: center; font-family: sans-serif;}
+		h1 {color: #eee;}
 		html,
 		body {
 			height: 100%;
 			margin: 0;
 			padding: 0;
+			background: #000; 
 		}
 	</style>
 </head>
 <body>
-	<div id="map"></div>
+
+	<div class="container">
+		<h1><i>Dispatche Mode</i></h1>
+		<div id="map"></div>
+	</div>
 	<script defer>
 		const key = "AIzaSyB-tXMMGuLiHTfdfOQV5MhxGbOFTzsPsts";
 		let map, infoWindow;
@@ -31,7 +38,7 @@
 	
 		function initMap() {
 			map = new google.maps.Map(document.getElementById('map'), {
-				center: { lat: 47.6553, lng: 122.3035 },
+				center: { lat: 47.6549939, lng: -122.3074973},
 				zoom: 12,
 				styles: [
 				  {
@@ -356,9 +363,18 @@
 						};
 						currentLocation.lat = pos.lat;
 						currentLocation.lng = pos.lng;
-						infoWindow.setPosition(pos);
-						infoWindow.setContent('You are here');
-						infoWindow.open(map);
+
+						let temp = new google.maps.Circle({
+							strokeColor: 'FF0000',
+							strokeOpacity: 0.0,
+							strokeWeight: 2,
+							fillColor: 'lime',
+							fillOpacity: 0.65,
+							map: map,
+							center: { lat: pos.lat, lng: pos.lng },
+							radius: 250
+						});
+						
 						map.setCenter(pos);
 						appInit();
 					}, function () {
