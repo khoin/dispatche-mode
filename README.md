@@ -18,3 +18,7 @@ Uses Google Maps API to Geocode and Calculate Distance. Uses Web Audio API (depr
 ### Collaborators
 
 * @acevedoj
+
+### License
+
+Public Domain
