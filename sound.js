@@ -27,19 +27,19 @@ class Sound {
 		let calc = t => {
 			let l = 0, r = 0;
 			let TAU = Math.PI*2;
-			let arp = [1,1.18,2,2.5];
+			let arp = [1,1.18,2,2.5]
 			for (let node of this.nodes.values()) {
 				switch (node.type) {
 					case 'Aid Response':
-						l += Math.sin(TAU*node.distance*t*440 + Math.sin(441*Math.PI*t*node.distance*3)* env(t, 1/(node.distance*2), 1000, 1)) * env(t, 1/(node.distance*2), 1800, 5) * 1/(node.distance**2);
-						r += Math.sin(TAU*node.distance*t*443 + Math.sin(440*Math.PI*t*node.distance*3)* env(t, 1/(node.distance*2), 1000, 1)) * env(t, 1/(node.distance*2), 1800, 5) * 1/(node.distance**2);
+						l += Math.sin(TAU*node.distance*t*110 + Math.sin(331*Math.PI*t*node.distance*3)* env(t, 1/(node.distance*2), 1000, 1)) * env(t, 1/(node.distance), 1800, 5) * 1/(node.distance**1.5);
+						r += Math.sin(TAU*node.distance*t*113 + Math.sin(330*Math.PI*t*node.distance*3)* env(t, 1/(node.distance*2), 1000, 1)) * env(t, 1/(node.distance), 1800, 5) * 1/(node.distance**1.5);
 					break;
 					case 'Medic Response':
-						l += Math.sin(TAU*330*node.distance*t + node.distance*2*Math.sin(TAU*node.distance*t)) * (1/node.distance);
-						r += Math.sin(TAU*330*node.distance*t + node.distance*2*Math.sin(TAU*node.distance*t)) * (1/node.distance);
+						l += 0.2* Math.sin(TAU*330*node.distance*t + node.distance*2*Math.sin(TAU*node.distance*t)) * (1/node.distance);
+						r += 0.2* Math.sin(TAU*330*node.distance*t + node.distance*2*Math.sin(TAU*node.distance*t)) * (1/node.distance);
 					break;
 					case 'Electrical Problem':
-						let o = 0.3 * (Math.sin(Math.PI*50*t*node.distance) > 0.8);
+						let o = 0.1 * (Math.sin(Math.PI*50*t*node.distance) > 0.8);
 						l += o;
 						r += o;
 					break;
@@ -49,12 +49,12 @@ class Sound {
 						r += Math.cos(node.distance) * z;
 					break;
 					default:
-						l += 0.09 * Math.sin(TAU*t*110*node.distance*arp[~~(t*node.distance%4)]) ;
-						r += 0.09 * Math.sin(TAU*t*110*node.distance*arp[~~((t*node.distance+0.01)%4)])  ;
+						l += 0.03 * Math.sin(TAU*t*110*node.distance*arp[~~(t*node.distance%4)]) ;
+						r += 0.03 * Math.sin(TAU*t*110*node.distance*arp[~~((t*node.distance+0.01)%4)])  ;
 					break;
 				}
 			}
-			return [l/33,r/33];
+			return [l/10,r/10];
 		}
 
 		let unit = 1/this.sampleRate;

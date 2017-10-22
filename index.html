@@ -416,9 +416,10 @@
 
 				})
 				.then(() => {
-					for(let i=0; i < Math.min(incidents.length, 32); i++) {
+					for(let i=0; i < Math.min(incidents.length, 55); i++) {
 						let inci = incidents[i];
-						let scale = 0.1+(inci.distance-450)*24/17500; // maps to approx 0.1 - 24;
+						let scale = 0.3+(inci.distance-450)*20/17500; // maps to approx 0.3 - 20;
+						if(scale < 10)
 						sound.addNode(inci.number, scale, inci.type);
 					}
 				})
@@ -435,7 +436,7 @@
 						fetch("https://maps.googleapis.com/maps/api/geocode/json?address="+incident.location+",%20Seattle&key="+key)
 						.then(res => res.json())
 						.then(data => {
-							incident.cityCircle = createPoint(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng, );
+							incident.cityCircle = createPoint(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng, incident.type);
 							incident.coord = {
 								lat: data.results[0].geometry.location.lat,
 								lng: data.results[0].geometry.location.lng
@@ -454,13 +455,13 @@
 		function createPoint(lat, long, type) {
 			return new google.maps.Circle({
 				strokeColor: 'FF0000',
-				strokeOpacity: 0.2,
+				strokeOpacity: 0,
 				strokeWeight: 2,
 				fillColor: 'hsl('+(type.length*30)+',50%,50%)',
 				fillOpacity: 0.55,
 				map: map,
 				center: { lat: lat, lng: long },
-				radius: 150
+				radius: 200
 			});
 		}
 
