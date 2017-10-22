@@ -27,7 +27,7 @@ class Sound {
 		let calc = t => {
 			let l = 0, r = 0;
 			let TAU = Math.PI*2;
-			let arp = [1,1.18,2,2.5]
+			let arp = [1,1.18,2,2.5];
 			for (let node of this.nodes.values()) {
 				switch (node.type) {
 					case 'Aid Response':
@@ -54,7 +54,7 @@ class Sound {
 					break;
 				}
 			}
-			return [l/35,r/35];
+			return [l/33,r/33];
 		}
 
 		let unit = 1/this.sampleRate;
