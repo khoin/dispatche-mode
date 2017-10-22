@@ -28,6 +28,7 @@
 		<h1><i>noise.from.uw.seattle.wa.us</i></h1>
 		<div id="map"></div>
 		<h1>github.com/khoin/dispatche-mode</h1>
+		<button onclick="imInSeattle()">I'm in Seattle</button>
 	</div>
 	<script defer>
 		const key = "AIzaSyB-tXMMGuLiHTfdfOQV5MhxGbOFTzsPsts";
@@ -379,6 +380,7 @@
 						map.setCenter(pos);
 						appInit();
 					}, function () {
+						imInSeattle();
 						handleLocationError(true, infoWindow, map.getCenter());
 						
 				});
@@ -389,10 +391,15 @@
 			}			
 		}
 
+		function imInSeattle() {
+			currentLocation = { lat: 47.6549939, lng: -122.3074973};
+			appInit();
+		}
+
 		function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 			infoWindow.setPosition(pos);
 			infoWindow.setContent(browserHasGeolocation ?
-				'Error: The Geolocation service failed.' :
+				'Error: The Geolocation service failed. Flew you to UW.' :
 				'Error: Your browser doesn\'t support geolocation.');
 			infoWindow.open(map);
 		}
