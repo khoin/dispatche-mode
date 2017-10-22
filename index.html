@@ -419,13 +419,17 @@
 		function appInit() {
 			sound.removeAll();
 			console.log("Updated at: " + (new Date()));
-			for (let incident of incidents) {
-				if(!incident.cityCircle)
-					incident.cityCircle.setMap(null);
-			}
+		
 
 			fetchDispatches()
 				.then(function (data) {
+					incidents.forEach(incident => {
+						if(incident.cityCircle)
+							incident.cityCircle.setMap(null);
+					});
+
+					incidents = [];
+
 					incidents = data;
 					return incidents;
 				})
