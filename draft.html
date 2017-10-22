@@ -5,14 +5,27 @@
 		
 	</title>
 	<script type="text/javascript" src="dispatches.js"></script>
+	<script type="text/javascript" src="sound.js"></script>
 </head>
 <body>
 	<script type="text/javascript">
 		let dispatches = [];
 
+		let aC = new AudioContext();
+		let sound = new Sound(aC);
+
 		fetchDispatches().then(data => {
 			dispatches = data;
-		})
+
+			dispatches.forEach( (dis, index) => {
+				if( index > 35) return;
+				console.log(~~(dis.location.split(" ")[0])/1500)
+				sound.addNode(dis.number, ~~(dis.location.split(" ")[0])/1500, dis.type)
+			})
+		});
+
+
+
 	</script>
 </body>
 </html>
