@@ -75,6 +75,7 @@ class Sound {
 	}
 
 	removeAll() {
+		this.T = 0;
 		this.nodes = new Map();
 	}
 }

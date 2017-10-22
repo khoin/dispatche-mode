@@ -416,10 +416,10 @@
 
 				})
 				.then(() => {
-					for(let i=0; i < Math.min(incidents.length, 55); i++) {
+					for(let i=0; i < Math.min(incidents.length, 75); i++) {
 						let inci = incidents[i];
 						let scale = 0.3+(inci.distance-450)*20/17500; // maps to approx 0.3 - 20;
-						if(scale < 10)
+						if(scale < 10 && sound.nodes.size < 40)
 						sound.addNode(inci.number, scale, inci.type);
 					}
 				})
