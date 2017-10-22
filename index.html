@@ -299,7 +299,6 @@
         getLocation(incidents[i]);
       }
       console.log(incidents);
-      getDistances();
     });
 
     function getLocation(incident) {
@@ -307,10 +306,12 @@
       geocoder.geocode( {'address': incident.location}, function(results, status) {
           if (status === 'OK') {
             incident.cityCircle = createPoint(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-            incident.location = {
+            incident.coord = {
               'lat' : results[0].geometry.location.lat(),
               'lng' : results[0].geometry.location.lng()
             }
+            incident.map = getDistance(incident.coord.lat, incident.coord.lng);
+            console.log(incident);
           }
         });
       }
@@ -329,31 +330,9 @@
         return cityCircle;
     }
 
-    function getDistances() {
-      var origin1;
-      var allDestinations = [
-        {
-        'lat' : 42.449, 
-        'lng' : 127.9389
-        },
-        {
-          'lat' : 43.234, 
-          'lng' : 128.00
-        }
-      ];
-      
-      console.log(allIncidents[0].location);
-      /*
-      origin1 = new google.map.LatLng(incident[i].location.lat, incident[i].location.lng);
-      var service = new google.maps.DistanceMatrixService();
-      service.getDistanceMatrix(
-        {
-          origins: [origin1], 
-          destinations: [destinations],
-          travelMode: 'DRIVING',
-        }, callback);
-        */
-    }
+    function getDistance(lat, lng) {
+      return new google.maps.LatLng(lat, lng);
+    } 
 
     function callback(response, status) {
       if (status === 'ok') {
@@ -361,9 +340,8 @@
       }
     }
 
-    
 
-    console.log(allIncidents);
+
   </script>
   <script async defer 
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3htBSw3w3_HZ-E8JqiUa5_t5cY_l7ldA&libraries=drawing&callback=initMap" ">
