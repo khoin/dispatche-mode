@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		
+	</title>
+	<script type="text/javascript" src="dispatches.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		let dispatches = [];
+
+		fetchDispatches().then(data => {
+			dispatches = data;
+		})
+	</script>
+</body>
+</html>
