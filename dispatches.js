@@ -20,5 +20,5 @@ fetchDispatches = () => {
 			})
 			resolve(output);
 		})	
-})
+	})
 }
