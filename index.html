@@ -366,11 +366,11 @@
 						currentLocation.lng = pos.lng;
 
 						let temp = new google.maps.Circle({
-							strokeColor: 'FF0000',
-							strokeOpacity: 0.0,
-							strokeWeight: 2,
-							fillColor: 'lime',
-							fillOpacity: 0.65,
+							strokeColor: 'white',
+							strokeOpacity: 1,
+							strokeWeight: 4,
+							fillColor: 'purple',
+							fillOpacity: 1,
 							map: map,
 							center: { lat: pos.lat, lng: pos.lng },
 							radius: 250
@@ -396,9 +396,34 @@
 				'Error: Your browser doesn\'t support geolocation.');
 			infoWindow.open(map);
 		}
+
+		// doesnt work
+		(function drawLoop() {
+			let t = sound.T;
+			let TAU = Math.PI*2;
+			let env = (t, measure, attack = 5000, decay = 20) => {
+				let ts = t / 4 % measure;
+				return Math.min(1, Math.exp(ts * attack)-1) * Math.exp(-ts * decay);
+			}
+			for(let node of incidents) {
+				if (node.cityCircle)
+					switch (node.type) {
+						case 'Aid Response':
+							node.cityCircle.setRadius( 300 + 700 * env(t, 1/node.distance, 1800, 5) * 1/(node.distance**1.5) );
+						break;
+					}
+			}
+			setInterval(drawLoop, 350);
+		});
 		
 		function appInit() {
 			sound.removeAll();
+			console.log("Updated at: " + (new Date()));
+			for (let incident of incidents) {
+				if(!incident.cityCircle)
+					incident.cityCircle.setMap(null);
+			}
+
 			fetchDispatches()
 				.then(function (data) {
 					incidents = data;
@@ -408,6 +433,7 @@
 				.then(() => {
 					// distances between
 					for (let incident of incidents) {
+						if (incident.coord)
 						incident.distance = google.maps.geometry.spherical.computeDistanceBetween(
 							new google.maps.LatLng(currentLocation.lat, currentLocation.lng),
 							new google.maps.LatLng(incident.coord.lat, incident.coord.lng)
@@ -418,12 +444,13 @@
 				.then(() => {
 					for(let i=0; i < Math.min(incidents.length, 75); i++) {
 						let inci = incidents[i];
+						if(!inci.distance) continue;
 						let scale = 0.3+(inci.distance-450)*20/17500; // maps to approx 0.3 - 20;
 						if(scale < 10 && sound.nodes.size < 40)
 						sound.addNode(inci.number, scale, inci.type);
 					}
 				})
-			setTimeout(appInit, 180000);
+			setTimeout(appInit, 90000);
 		}
 
 		function getLocation(incidents) {
@@ -436,6 +463,7 @@
 						fetch("https://maps.googleapis.com/maps/api/geocode/json?address="+incident.location+",%20Seattle&key="+key)
 						.then(res => res.json())
 						.then(data => {
+							if(!data.results[0]) return res();
 							incident.cityCircle = createPoint(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng, incident.type);
 							incident.coord = {
 								lat: data.results[0].geometry.location.lat,
