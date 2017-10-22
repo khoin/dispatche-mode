@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>Geolocation</title>
+	<title>Dubhacks - Dispatche Mode</title>
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
 	<script src="dispatches.js"></script>
@@ -25,9 +25,9 @@
 <body>
 
 	<div class="container">
-		<h1><i>noise.from.seattle.wa.us</i></h1>
+		<h1><i>noise.from.uw.seattle.wa.us</i></h1>
 		<div id="map"></div>
-		github.com/khoin/dispatche-mode
+		<h1>github.com/khoin/dispatche-mode</h1>
 	</div>
 	<script defer>
 		const key = "AIzaSyB-tXMMGuLiHTfdfOQV5MhxGbOFTzsPsts";
@@ -398,6 +398,7 @@
 		}
 		
 		function appInit() {
+			sound.removeAll();
 			fetchDispatches()
 				.then(function (data) {
 					incidents = data;
@@ -421,6 +422,7 @@
 						sound.addNode(inci.number, scale, inci.type);
 					}
 				})
+			setTimeout(appInit, 180000);
 		}
 
 		function getLocation(incidents) {

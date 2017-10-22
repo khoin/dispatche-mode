@@ -2,7 +2,7 @@ class Sound {
 	constructor(audioContext) {
 		this.nodes = new Map();
 
-		this.processor = audioContext.createScriptProcessor(8192, 0, 2);
+		this.processor = audioContext.createScriptProcessor(16384, 0, 2);
 		this.processor.onaudioprocess = this.audioEventHandler.bind(this);
 		this.sampleRate = audioContext.sampleRate;
 
@@ -72,5 +72,9 @@ class Sound {
 			distance: distance,
 			type: type
 		})
+	}
+
+	removeAll() {
+		this.nodes = new Map();
 	}
 }
