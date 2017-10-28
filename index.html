@@ -357,7 +357,8 @@
 			infoWindow = new google.maps.InfoWindow;
 
 			// Try HTML5 geolocation.
-			if (navigator.geolocation) {
+			// let's skip this.
+			if (false && navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function (position) {
 						var pos = {
 							lat: position.coords.latitude,
@@ -400,7 +401,7 @@
 			infoWindow.setPosition(pos);
 			infoWindow.setContent(browserHasGeolocation ?
 				'Error: The Geolocation service failed. Flew you to UW.' :
-				'Error: Your browser doesn\'t support geolocation.');
+				'University of Washington, Seattle.');
 			infoWindow.open(map);
 		}
 
