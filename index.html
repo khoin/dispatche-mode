@@ -387,6 +387,7 @@
 				});
 			} else {
 				// Browser doesn't support Geolocation
+				currentLocation = { lat: 47.6549939, lng: -122.3074973};
 				handleLocationError(false, infoWindow, map.getCenter());
 				appInit();
 				
